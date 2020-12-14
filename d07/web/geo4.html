@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2348a50ce2bdcf2f6cf00ff8ad5e426d"></script>
+
+<style>
+#map{
+	width:600px;
+	height:600px;
+	border:2px solid bule;
+}
+</style>
+<script>
+var map = null;
+var tem = null;
+var result = '';
+
+function mapDisplay(){
+	var container = document.getElementById('map');
+	var options = {
+		center: new kakao.maps.LatLng(37.539506, 126.991848),
+		level: 6
+	};
+	map = new kakao.maps.Map(container, options);
+}
+
+function panTo(lat,lng) {
+    // 이동할 위도 경도 위치를 생성합니다 
+    var moveLatLon = new kakao.maps.LatLng(lat, lng);
+    
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    map.panTo(moveLatLon);            
+}  
+
+function getData(){
+	   $.ajax({
+	      url:'getdatas',
+	      async:false,
+	      success:function(result){
+
+	    	  tem = result;
+	      },
+	      error:function(){
+	         alert('Error...!');
+	      }
+	   });
+	};
+
+function display(datas){
+	$(datas).each(function(index,branch){
+		
+		result += branch.title+' '+branch.lat+' '+branch.lng;
+		
+	});
+		alert(result);
+};
+
+	
+$(document).ready(function(){
+	
+	mapDisplay();
+	getData();
+
+	
+	$('button:eq(0)').click(function(){
+		//seoul
+		panTo(37.539506, 126.991848);
+		display(tem);
+	});
+	$('button:eq(1)').click(function(){
+		//busan
+		panTo(35.116367, 129.100056);
+		display(tem);
+	});
+	
+});
+</script>
+</head>
+<body>
+<button>Seoul</button>
+<button>Busan</button>
+<div id="map"></div>
+</body>
+</html>

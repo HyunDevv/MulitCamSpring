@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<style>
+#product{
+	width:800px;
+	height:200px;
+	border:2px solid blue;
+}
+#product > div{
+	width:150px;
+	height:190px;
+	border:1px;
+	border:3px dotted yellow;
+	float:left;
+}
+#product > div > img{
+	width : 80px;
+	height : 80px;
+}
+#cart{
+	width:800px;
+	height:200px;
+	border:2px solid red;
+	overflow:auto;
+}
+#cart > img{
+	width:30px;
+	height:30px;
+}
+</style>
+<script>
+var products = null;
+var sum = 0;
+var money = 0;
+
+function display(datas){
+	$(datas).each(function(index,data){
+		var result='';
+		result += '<div num="'+index+'">';
+		result += '<img src="img/'+data.img+'">';
+		result += '<p>'+data.name+'</p>'
+		result += '<p>'+data.stock+'</p>'
+		result += '<p>'+data.price+'</p>'
+		result += '</div>';
+		$('#product').append(result);
+	});
+};
+
+function getData(){
+	products = [
+		{id:'001', name:'햄버거1', price:10000, img:'h1.jpg', stock:10},
+		{id:'002', name:'햄버거2', price:20000, img:'h2.jpg', stock:20},
+		{id:'003', name:'햄버거3', price:30000, img:'h3.jpg', stock:30},
+		{id:'004', name:'햄버거4', price:40000, img:'h4.jpg', stock:40},
+		{id:'005', name:'햄버거5', price:50000, img:'h5.jpg', stock:50}
+	];
+	display(products);
+};
+
+function cart(n){
+	var name = products[n].name;
+	var price = products[n].price;
+	var img = products[n].img;
+	var result = '';
+	result += '<img src="img/'+img+'">';
+	result += name + ' ' + price + '<br>';
+	$('#cart').append(result);
+};
+
+function total(n){
+	var price = products[n].price;
+	sum += price;
+	$('#total > span').text(sum);
+}
+
+function payment(){
+	money = $('#payment > input').val();
+		if(isNaN(money) == false){
+			if(sum==0){
+					$('#payment > p').text('제품을 선택해주세요');
+			}else{
+				if(money < sum){
+					$('#payment > p').text('돈이 부족합니다');
+				}else{
+					$('#payment > p').text(money-sum+'원이 남았습니다');
+					var total = $('#total > span').text();
+					alert(total);
+					sendData(total);
+				}
+			}
+		}else{
+			$('#payment > p').text('돈은 문자일 수 없습니다');
+		}
+};
+
+function sendData(d){
+	$.ajax({
+		url:'getdata4',
+		async:false,           //div를 만들기도 전에 실행하는 것을 방지한다
+		data:{cmd:d},
+		success:function(){
+			alert('OK..');
+		},
+		error:function(){
+			alert('Error.....');
+		}
+	});
+};
+
+
+$(document).ready(function(){
+	
+	getData();
+	
+	
+	
+	$('#product > div').click(function(){
+		var num = $(this).attr('num');
+		cart(num);
+		total(num);
+	});
+	
+	
+	
+	$('#payment > button').click(function(){
+		payment();	
+	});
+
+
+});
+
+
+</script>
+</head>
+<body>
+<h1>POS SYSTEM</h1>
+
+<div id="product"></div>
+
+<h1 id="total">total:<span name="total"></span></h1>
+
+<div id="cart"></div>
+
+<div id="payment">
+<input type="text" name="money" placeholder="돈을 입력하세요">
+<button>결제하기</button><br>
+<p></p>
+</div>
+
+</body>
+</html>

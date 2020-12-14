@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<style>
+#result{
+	width:600px;
+	height:150px;
+	border:2px solid black;
+	overflow:auto;
+}
+	
+h4{
+  border: 1px solid blue;
+  margin: 1px;
+  padding: 2px; 
+}
+	
+
+</style>
+<script>
+
+function getData(){
+	if($('input[name="loc"]').val() != ''){
+		var urlstr = 'https://dapi.kakao.com/v2/search/web.json'
+		loc = $('input[name="loc"]').val();
+		
+		$.ajax({
+			method:'GET',
+			url:urlstr,
+			headers:{'Authorization' : 'KakaoAK 8bb4664642b1184f894533fe7edb0245'},
+			data:{'query':loc, 'page':1, 'size':4},
+			success:function(data){
+				display(data);
+			},
+			error: function(){
+				alert('error');
+			}
+		});
+		  
+	}else{
+		return;
+	}
+};
+	
+function display(data){
+	$(data.documents).each(function(index, add){
+		var result = '';
+		result += '<h4>' + "제목 : " +add.title + '<br>' + "내용 : " +add.contents + '<br>' + "날짜 : " + add.datetime + '<br>'  + "링크 : " + '<a href='+add.url+'>' + add.url + '</a>' + '</h4>';
+		$('#result').append(result);
+	});
+};
+	
+
+	
+$(document).ready(function(){
+	
+	$('button').click(function(){
+		$('#result').empty();
+		getData();
+	});
+
+});
+</script>
+</head>
+<body>
+<button>검색하기</button>
+<input type="text" name="loc">
+<div id="result"></div>
+</body>
+</html>

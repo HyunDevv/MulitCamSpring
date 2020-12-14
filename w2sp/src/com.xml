@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:comtext="http://www.springframework.org/schema/comtext"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		">
+	
+	<!-- xml 방식 -->
+
+	<bean id="log" class="com.log.LogAdvice"/> <!--횡단업무 선언 -->
+	<bean id="tx" class="com.log.TxAdvice"/>
+
+	<bean id="userdao" class="com.component.UserDao" />
+	<bean id="itemdao" class="com.component.ItemDao" />
+	<bean id="userservice" class="com.component.UserService" p:dao-ref="userdao"/>
+	<bean id="itemserviec" class="com.component.ItemService" p:dao-ref="itemdao"/>  <!-- DI 방식 중 P사용 -->
+		<!--  <constructor-arg ref="mysqldao"></constructor-arg> -->
+		<!--  <property name="dao" ref="oracledao"></property> -->
+		
+	<aop:config>
+		<aop:pointcut id="mypoint2" 
+	expression="execution(* com.component..*Dao.*(..))"/>
+		<aop:pointcut id="mypoint" 
+	expression="execution(* com.component..*Service.*(..))"/>
+		
+<!--  		<aop:aspect ref="log">
+			<aop:before pointcut-ref="mypoint" method="printLog"/>
+		 	<aop:after-returning pointcut-ref="mypoint2" method="printLog2" returning="returnObj"/> 
+		</aop:aspect>   -->
+		
+		<aop:aspect ref="tx">
+			<aop:around pointcut-ref="mypoint" method="aroundTx"/>
+		</aop:aspect>
+	</aop:config>
+
+</beans>
+
+
+
+

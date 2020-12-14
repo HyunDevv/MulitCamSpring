@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+
+</style>
+<script>
+
+function a(f){
+	var result = f(10);
+	return result;
+};
+var b = function(d){
+	return d*100;
+};
+
+alert(a(b));
+
+function c(){
+	return function(a){
+		return a *100;
+	};
+};
+
+var f2 = c();
+alert(f2(2));
+</script>
+</head>
+<body>
+
+</body>
+</html>

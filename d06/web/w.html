@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<style>
+div{
+	width:500px;
+	border:2px solid red;
+}
+</style>
+<script>
+function getData(){
+	var urlstr= 'weather';
+	$ajax({
+		url:urlstr,
+		dataType:'xml',
+		success:function(data){
+			alert(data);
+		},
+		error:function(){
+			alert('error');
+		}
+	});
+};
+
+$(document).ready(function(){
+	$('button').click(function(){
+		getData();
+	});
+});
+</script>
+</head>
+<body>
+<h1>Weather Test</h1>
+<button>Click</button>
+<div></div>
+</body>
+</html>

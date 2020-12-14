@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2348a50ce2bdcf2f6cf00ff8ad5e426d"></script>
+<style>
+div{
+	width:600px;
+	height:600px;
+	border:2px solid bule;
+}
+</style>
+<script>
+$(document).ready(function(){
+	var container = document.getElementById('map');
+	var options = {
+		center: new kakao.maps.LatLng(37.679917, 126.726808),
+		level: 3
+	};
+
+	var map = new kakao.maps.Map(container, options);
+});
+</script>
+</head>
+<body>
+<h1> 지도 Test </h1>
+<div id="map"></div>
+</body>
+</html>

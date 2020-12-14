@@ -1,0 +1,52 @@
+@charset "EUC-KR";
+
+
+table{
+	border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+a {
+ color: black;
+}
+
+.tn_list1{
+	border: 1px solid black;
+}
+
+.tn_list2{
+	border: 1px solid black;
+}
+,
+table > tr >
+
+#img1{
+	color:white;
+	background:green;
+}
+
+#img1 {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}
+#img1{
+	color:white;
+	background:green;
+}
+
+#img2 {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}
+
+#img2:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+

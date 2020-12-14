@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<style>
+#item{
+	width:300px;
+	height:100px;
+	border:2px solid red;	
+}
+#item > div {
+	width:99px;
+	height:100px;
+	border:1px solid blue;
+	float:left;
+}
+#cart{
+	width:300px;
+	border:2px dotted green;
+	margin:5px 0;
+}
+#sum{
+	width:300px;
+	border:2px dotted yellow;
+	margin:5px 0;
+}
+</style>
+<script>
+var sum = 0;
+
+function cartView(name, price){
+	var result = '<h2>'+name+' '+price+'</h2>';
+	$('#cart').append(result);
+};
+
+function sumView(price){
+	sum = sum + Number(price);
+	$('#sum').html('<h2>'+'total : '+sum+'</h2>');
+};
+
+$(document).ready(function(){
+	
+	$('#item > div').click(function(){
+		var num = $(this).attr('num');
+		var name = $('#item > div:eq('+num+') > h2').text();
+		var price = $('#item > div:eq('+num+') > p').text();
+		cartView(name,price);
+		sumView(price);
+	});
+	
+	/*
+	$('#item > div').eq(0).click(function(){
+		var name = $('#item > div:eq(0) > h2').text();
+		var price = $('#item > div:eq(0) > p').text();
+		alert(name+' '+price);
+	});
+	
+	$('#item > div').eq(1).click(function(){
+		var name = $('#item > div:eq(1) > h2').text();
+		var price = $('#item > div:eq(1) > p').text();
+		alert(name+' '+price);
+	});
+	*/
+});
+</script>
+</head>
+<body>
+<h1>POS</h1>
+
+<div id="item">
+	<div num="0">
+		<h2>빵</h2>
+		<p>10000</p>
+	</div>
+	<div num="1">
+		<h2>사과</h2>
+		<p>20000</p>
+	</div>
+</div>
+<div id="cart">
+
+</div>
+<div id="sum">
+
+</div>
+</body>
+</html>

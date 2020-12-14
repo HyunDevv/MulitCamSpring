@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!-- xml 방식 -->
+
+	<bean id="oracledao" class="com.component.OracleDao"/>
+	<bean id="mycqldao" class="com.component.MySqlDao"/>
+	<bean id="ubiz" class="com.component.UserBiz" p:dao-ref="oracledao">  <!-- DI 방식 중 P사용 -->
+		<!--  <constructor-arg ref="mysqldao"></constructor-arg>    constructor 방식-->
+		<!--  <property name="dao" ref="oracledao"></property>   setter방식-->
+		
+	</bean>
+	
+
+</beans>
+
+
+

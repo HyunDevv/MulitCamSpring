@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script>
+	function success(position){
+	lat = position.coords.latitude;
+	lng = position.coords.longitude;
+	alert(lat+" "+lng);
+	map.setCenter(center);
+	};
+	function error(){
+	alert('error');
+	};
+	var watch = window.navigator.geolocation.watchPosition(
+	success,
+	error,
+	{
+	enableHighAccurancy:true,
+	timeout:5000,
+	maximumAge:0
+	}
+	);
+</script>
+</head>
+<body>
+</body>
+</html>
